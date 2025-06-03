@@ -1,8 +1,6 @@
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
-#sudo apt install fzf zoxide
-
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
@@ -33,15 +31,6 @@ zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-autosuggestions
 zinit light Aloxaf/fzf-tab
 
-# Add in snippets
-zinit snippet OMZL::git.zsh
-zinit snippet OMZP::git
-zinit snippet OMZP::sudo
-zinit snippet OMZP::archlinux
-zinit snippet OMZP::aws
-zinit snippet OMZP::kubectl
-zinit snippet OMZP::kubectx
-zinit snippet OMZP::command-not-found
 
 # Load completions
 autoload -Uz compinit && compinit
@@ -58,7 +47,7 @@ bindkey '^n' history-search-forward
 bindkey '^[w' kill-region
 
 # History
-HISTSIZE=5000
+HISTSIZE=50000
 HISTFILE=~/.zsh_history
 SAVEHIST=$HISTSIZE
 HISTDUP=erase
@@ -81,11 +70,52 @@ zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 alias ls='ls --color'
 alias vim='nvim'
 alias c='clear'
-alias p='pnpm'
+alias p='pnpm add'
+alias n='npm install'
 alias pd='pnpm dev'
 alias nd='npm run dev'
+alias cu='
+sudo apt update && 
+sudo apt upgrade -y && 
+sudo apt autoremove -y && 
+sudo apt clean && 
+sudo apt autoclean && 
+sudo snap list --all | awk "/disabled/{print \$1, \$3}" | while read snapname revision; do sudo snap remove \"\$snapname\" --revision=\"\$revision\"; done && echo "✅ System cleaned and updated."'
+alias cursor="~/Apps/cursor.AppImage --no-sandbox"
+alias gi='git init && git add .'
+alias ga='git add .'
+alias gc='git commit -m'
+alias gpm='git push origin main'
+alias gu='git remote set-url origin'
+alias gb='git switch -C'
+alias gs='git status'
+alias gw='git switch'
+alias gp='git push origin'
+alias gl='git pull'
+alias daemon-on='sudo systemctl start docker'
+alias daemon-off='sudo systemctl stop docker'
+# Dirs
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+alias ......="cd ../../../../.."
+
+#kill processes
+killport() {
+  if [ -z "$1" ]; then
+    echo "Usage: killport <port>"
+  else
+    kill -9 $(lsof -ti :$1) 2>/dev/null && echo "Killed process on port $1" || echo "No process found on port $1"
+  fi
+}
 
 # Shell integrations
 [ -f /usr/share/doc/fzf/examples/key-bindings.zsh ] && source /usr/share/doc/fzf/examples/key-bindings.zsh
 [ -f /usr/share/doc/fzf/examples/completion.zsh ] && source /usr/share/doc/fzf/examples/completion.zsh
 eval "$(zoxide init --cmd cd zsh)"
+
+# pnpm
+export PNPM_HOME="$HOME/.pnpm-global"
+export PATH="$PNPM_HOME:$PATH"
+ # pnpm end
