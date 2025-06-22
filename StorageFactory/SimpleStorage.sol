@@ -11,7 +11,7 @@ contract SimpleStorage {
     Person[] public Persons;
     mapping (string => uint256) public favNum;
 
-    function set(string memory _name, uint256 _favNum) public {
+    function set(string memory _name, uint256 _favNum) public virtual {
         Persons.push(Person(_name, _favNum));
         favNum[_name]=_favNum;
 
