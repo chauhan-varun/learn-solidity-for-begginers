@@ -22,12 +22,12 @@ Each file explores a different feature or pattern in Solidity programming — fr
 | `uber.sol`       | Uber-style app simulation using smart contracts      |
 | `will.sol`       | Smart contract-based will to transfer assets         |
 
-# 🛠️ How to Use  
+## 🛠️ How to Use  
 
 1. **Clone the repository:**  
 
-    git clone https://github.com/chauhan-varun/solidity.git  
-    cd solidity  
+    `git clone https://github.com/chauhan-varun/solidity.git`
+    `cd solidity`  
 
 2. **Open [Remix IDE](https://remix.ethereum.org/):**  
 
