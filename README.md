@@ -22,9 +22,45 @@ Each file explores a different feature or pattern in Solidity programming — fr
 | `uber.sol`       | Uber-style app simulation using smart contracts      |
 | `will.sol`       | Smart contract-based will to transfer assets         |
 
-## 🛠️ How to Use
+## 🛠️ How to Use  
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/chauhan-varun/solidity.git
-   cd solidity
+1. **Import the repository into Remix:**  
+
+    - Open [Remix IDE](https://remix.ethereum.org/).  
+    - In the **File Explorer**, click the **"Connect to GitHub"** button.  
+    - Enter the repository URL:  
+      `https://github.com/chauhan-varun/solidity.git  `
+    - The contracts will be loaded directly into Remix for you to explore and edit.  
+
+2. **Open [Remix IDE](https://remix.ethereum.org/):**  
+
+    - Remix is an online Solidity compiler and development environment.  
+    - You can use it directly from your browser — no local setup required.  
+
+3. **Explore the contract files:**  
+
+    - Open any `.sol` file from the imported repository inside Remix.  
+    - Example files you can try: `array.sol`, `calculator.sol`, `uber.sol`.  
+
+4. **Compile the contract:**  
+
+    - Go to the **Solidity Compiler** tab in Remix.  
+    - Make sure the compiler version matches (use `0.8.x` as mentioned in the contracts).  
+    - Press **Compile**.  
+
+5. **Deploy and interact with the contract:**  
+
+    - Open the **Deploy & Run Transactions** tab.  
+    - Choose **Remix VM (London)** or your connected wallet provider.  
+    - Deploy the contract and try out its functions directly from Remix.  
+
+6. **Experiment and Learn:**  
+
+    - Review the logic in each contract.  
+    - Try modifying or extending them.  
+    - This is a hands-on way to learn Solidity concepts like arrays, mappings, structs, modifiers, and payable functions.  
+
+---
+
+> **Note:** These contracts are intended strictly for learning and practice.  
+> Do not deploy them on mainnet without proper security review and testing.  
