@@ -24,19 +24,22 @@ Each file explores a different feature or pattern in Solidity programming — fr
 
 ## 🛠️ How to Use  
 
-1. **Clone the repository:**  
+1. **Import the repository into Remix:**  
 
-    `git clone https://github.com/chauhan-varun/solidity.git`
-    `cd solidity`  
+    - Open [Remix IDE](https://remix.ethereum.org/).  
+    - In the **File Explorer**, click the **"Connect to GitHub"** button.  
+    - Enter the repository URL:  
+      `https://github.com/chauhan-varun/solidity.git  `
+    - The contracts will be loaded directly into Remix for you to explore and edit.  
 
 2. **Open [Remix IDE](https://remix.ethereum.org/):**  
 
     - Remix is an online Solidity compiler and development environment.  
     - You can use it directly from your browser — no local setup required.  
 
-3. **Upload the contract files:**  
+3. **Explore the contract files:**  
 
-    - Drag and drop any `.sol` file from this repository into Remix’s File Explorer.  
+    - Open any `.sol` file from the imported repository inside Remix.  
     - Example files you can try: `array.sol`, `calculator.sol`, `uber.sol`.  
 
 4. **Compile the contract:**  
