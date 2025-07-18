@@ -2,7 +2,7 @@
 pragma solidity 0.8.26;
 
 /// @title Dynamic Array Example
-/// @author Varun chauhan
+/// @author Varun Chauhan
 /// @notice This contract demonstrates how to use dynamic arrays in Solidity.
 contract Array {
     /// @notice Stores a list of unsigned integers.

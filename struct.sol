@@ -2,7 +2,7 @@
 pragma solidity ^0.8.0;
 
 /// @title Person Management Contract
-/// @author Varun chauhan
+/// @author Varun Chauhan
 /// @notice Stores and retrieves information about a single person.
 contract PersonContract {
     /// @notice Structure to represent a person.
