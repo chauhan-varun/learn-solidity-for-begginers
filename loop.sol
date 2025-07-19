@@ -4,18 +4,18 @@ pragma solidity ^0.8.0;
 /// @title Loop Contract for Summation
 /// @author Varun Chauhan
 /// @notice Demonstrates looping over an array to calculate the sum of its elements.
-contract Loop {
 
-    uint public sum = 0;
+contract Loop {
+    uint private s_sum;
 
     /// @notice Adds all numbers in an array and returns the sum.
-    /// @param num An array of unsigned integers to be summed.
-    /// @return The sum of all elements in the array.
-    function addNumber(uint[] memory num) public returns (uint) {
-        sum = 0; // Reset sum before calculation
-        for (uint i = 0; i < num.length; i++) {
-            sum += num[i];
+    /// @param nums An array of unsigned integers to be summed.
+    /// @return sum The sum of all elements in the array.
+    function addNumbers(uint[] memory nums) public returns (uint sum) {
+        s_sum = 0; 
+        for (uint i = 0; i < nums.length; i++) {
+            s_sum += nums[i];
         }
-        return sum;
+        sum = s_sum;
     }
 }

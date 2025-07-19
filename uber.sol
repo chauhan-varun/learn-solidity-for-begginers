@@ -1,29 +1,33 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.26;
+pragma solidity ^0.8.26;
 
 /// @title Simple Uber-like Ride Booking Contract
-/// @notice This contract allows booking and tracking balances for rides
+/// @author Varun Chauhan
+/// @notice This contract allows booking and tracking balances for rides.
 contract Uber {
 
-    /// @notice Owner of contract
-    address public owner;
+    /// @notice Immutable owner address set at contract deployment.
+    address public immutable i_owner;
 
-    /// @notice Contract balance tracker
-    uint public balance;
+    /// @notice Current contract balance (demonstrative only).
+    uint public s_balance;
 
-    /// @notice Mapping of user addresses to balances
-    mapping(address => uint) public balances;
+    /// @notice Mapping of user addresses to their balances.
+    mapping(address => uint) private s_balances;
 
-    /// @notice Sets the deployer as owner
-    constructor() {
-        owner = msg.sender;
-    }
-
-    /// @notice Modifier restricting function to owner only
+    /// @notice Restricts functions to only the contract owner.
     modifier onlyOwner() {
-        require(owner == msg.sender, "You aren't the owner");
+        if (i_owner != msg.sender) revert NotOwner();
         _;
     }
 
-    // Additional ride booking/storage/payments logic would go here
+    /// @notice Error thrown when caller is not the owner.
+    error NotOwner();
+
+    /// @notice Initializes the contract owner as the deployer.
+    constructor() {
+        i_owner = msg.sender;
+    }
+
+    // Additional ride-booking and payment functions would be added here.
 }
