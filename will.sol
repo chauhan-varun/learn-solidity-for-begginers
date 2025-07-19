@@ -12,16 +12,17 @@ contract Inheritance {
     address public immutable i_owner;
     address payable public immutable i_recipient;
 
-    error NotOwner();
-    error NotRecipient();
+    error WILL__NotOwner();
+    error WILL__NotRecipient();
+    error WILL__TransactionFailed();
 
     modifier onlyOwner() {
-        if (i_owner != msg.sender) revert NotOwner();
+        if (i_owner != msg.sender) revert WILL__NotOwner();
         _;
     }
 
     modifier onlyRecipient() {
-        if (i_recipient != msg.sender) revert NotRecipient();
+        if (i_recipient != msg.sender) revert WILL__NotRecipient();
         _;
     }
 
@@ -47,7 +48,7 @@ contract Inheritance {
         if (block.timestamp < s_lastVisited + TEN_YEARS) revert("Too soon to claim");
 
         uint balance = address(this).balance;
-        (bool sent, ) = i_recipient.call{value: balance}("");
-        require(sent, "Failed to send Ether");
+        (bool success, ) = i_recipient.call{value: balance}("");
+        if(!success) revert WILL__TransactionFailed();
     }
 }
