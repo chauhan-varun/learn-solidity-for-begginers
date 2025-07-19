@@ -7,81 +7,84 @@ pragma solidity ^0.8.26;
 
 contract MyToken {
 
-    /// @notice Initial total supply of tokens
-    uint public initialSupply;
+    /// @notice Tracks the total supply of tokens.
+    uint public s_initialSupply;
 
-    /// @notice Owner of the contract
-    address public owner;
+    /// @notice Immutable address of the contract owner.
+    address public immutable i_owner;
 
-    /// @notice Balances of each address
-    mapping(address => uint) public balances;
+    /// @notice Balances of each address.
+    mapping(address => uint) private s_balances;
 
-    /// @notice Allowances: owner => spender => amount
-    mapping(address => mapping(address => uint)) public allowances;
+    /// @notice Allowances: owner => spender => amount.
+    mapping(address => mapping(address => uint)) private s_allowances;
 
-    /// @notice Sets deployer as owner
-    constructor() {
-        owner = msg.sender;
-    }
-
-    /// @notice Modifier to restrict to owner
+    /// @notice Restricts functions to contract owner only.
     modifier onlyOwner() {
-        require(msg.sender == owner, "You aren't the owner");
+        if (i_owner != msg.sender) revert NotOwner();
         _;
     }
 
-    /// @notice Approves allowance for spender
-    /// @param spender The address allowed to spend
-    /// @param value The amount allowed
-    /// @return success Confirmation of approval
+    /// @notice Error thrown if caller is not owner.
+    error NotOwner();
+
+    /// @notice Contract constructor that sets the deployer as owner.
+    constructor() {
+        i_owner = msg.sender;
+    }
+
+    /// @notice Approves a spender to transfer up to a certain number of tokens on behalf of caller.
+    /// @param spender Address allowed to transfer tokens.
+    /// @param value Number of tokens approved.
+    /// @return success Returns true if approval is successful.
     function approve(address spender, uint value) public returns (bool success) {
-        allowances[msg.sender][spender] = value;
+        s_allowances[msg.sender][spender] = value;
         return true;
     }
 
-    /// @notice Transfer tokens from one address to another using allowance
-    /// @param from The address to send tokens from
-    /// @param to The address to send tokens to
-    /// @param value The amount to be transferred
-    /// @return success Confirmation of transfer
+    /// @notice Transfers tokens from one address to another using allowance.
+    /// @param from The address from which tokens are transferred.
+    /// @param to The recipient address.
+    /// @param value Number of tokens to transfer.
+    /// @return success Returns true if transfer succeeds.
     function transferFrom(address from, address to, uint value) public returns (bool success) {
-        require(allowances[from][msg.sender] >= value, "Allowance too low");
-        require(balances[from] >= value, "Balance too low");
-        balances[from] -= value;
-        balances[to] += value;
-        allowances[from][msg.sender] -= value;
+        if (s_allowances[from][msg.sender] < value) revert("Allowance too low");
+        if (s_balances[from] < value) revert("Balance too low");
+        s_balances[from] -= value;
+        s_balances[to] += value;
+        s_allowances[from][msg.sender] -= value;
         return true;
     }
 
-    /// @notice Mint tokens to the owner's balance
-    /// @param amount The number of tokens to mint
+    /// @notice Mints new tokens to the owner's balance.
+    /// @param amount Number of tokens to mint.
     function mint(uint amount) public onlyOwner {
-        balances[owner] += amount;
-        initialSupply += amount;
+        s_balances[i_owner] += amount;
+        s_initialSupply += amount;
     }
 
-    /// @notice Mint tokens to a specific address
-    /// @param amount Number of tokens
-    /// @param to Recipient address
+    /// @notice Mints new tokens to a specified address.
+    /// @param amount Number of tokens to mint.
+    /// @param to Recipient address.
     function mintTo(uint amount, address to) public onlyOwner {
-        balances[to] += amount;
-        initialSupply += amount;
+        s_balances[to] += amount;
+        s_initialSupply += amount;
     }
 
-    /// @notice Transfer tokens to another address
-    /// @param amount Tokens to send
-    /// @param to Recipient address
+    /// @notice Transfers tokens from caller to another address.
+    /// @param amount Number of tokens to transfer.
+    /// @param to Recipient address.
     function transfer(uint amount, address to) public {
-        require(balances[msg.sender] >= amount, "Balance too low");
-        balances[msg.sender] -= amount;
-        balances[to] += amount;
+        if (s_balances[msg.sender] < amount) revert("Balance too low");
+        s_balances[msg.sender] -= amount;
+        s_balances[to] += amount;
     }
 
-    /// @notice Burn tokens from sender's balance
-    /// @param amount Tokens to burn
+    /// @notice Burns tokens from the caller's balance.
+    /// @param amount Number of tokens to burn.
     function burn(uint amount) public {
-        require(balances[msg.sender] >= amount, "Balance too low");
-        balances[msg.sender] -= amount;
-        initialSupply -= amount;
+        if (s_balances[msg.sender] < amount) revert("Balance too low");
+        s_balances[msg.sender] -= amount;
+        s_initialSupply -= amount;
     }
 }
