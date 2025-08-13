@@ -79,7 +79,7 @@ Follow these detailed step-by-step instructions to open, compile, and interact w
 1. In Remix, look at the **File Explorer** panel on the left (folder icon).
 2. Click the "Clone from GitHub" button (or the plug icon), usually near the top.
 3. Paste this repository URL:   
-   `https://github.com/hilmikt/learn-solidity-for-beginners`
+   ``` https://github.com/chauhan-varun/learn-solidity-for-beginners```
 4. Select a `.sol` file of interest – it will appear in your Remix workspace.
 5. Click the Solidity compiler tab and compile the contract.
 6. Head to the "Deploy & Run Transactions" tab, deploy, and interact with the contract.
